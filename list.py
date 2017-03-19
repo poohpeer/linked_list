@@ -31,25 +31,32 @@ class LinkedList(object):
         cur_node = self.root
 
         while cur_node:
-            if new_node.data >= cur_node.data:
-                if cur_node.has_next() and new_node.data <= cur_node.next_node.data:
-                    # If new node lower than current node, replace it
-                    old_next = cur_node.next_node
-                    cur_node.next_node = new_node
-                    new_node.next_node = old_next
-            else:
-                if cur_node == self.root:
-                    # If current was root, set new to be root
-                    new_node.next_node = self.root
-                    self.root = new_node
-                    return True
+            if new_node.data < cur_node.data and cur_node == self.root:
+                return self._insert_as_root(new_node)
+            elif new_node.data == cur_node.data:
+                return self._insert_in_the_middle(cur_node, new_node)
+            elif new_node.data > cur_node.data:
+                if cur_node.has_next():
+                    if new_node.data <= cur_node.next_node.data:
+                        return self._insert_in_the_middle(cur_node, new_node)
                 else:
-                    return True
-            if cur_node.has_next():
-                cur_node = cur_node.next_node
-            else:
-                cur_node.next_node = new_node
-                cur_node = None
+                    return self._insert_at_the_end(cur_node, new_node)
+            cur_node = cur_node.next_node
+        return True
+
+    def _insert_as_root(self, new_node):
+        new_node.next_node = self.root
+        self.root = new_node
+        return True
+
+    def _insert_in_the_middle(self, cur_node, new_node):
+        old_next = cur_node.next_node
+        cur_node.next_node = new_node
+        new_node.next_node = old_next
+        return True
+
+    def _insert_at_the_end(self, cur_node, new_node):
+        cur_node.next_node = new_node
         return True
 
     def add_nodes(self, new_nodes):
