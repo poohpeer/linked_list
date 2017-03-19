@@ -1,14 +1,14 @@
 from list import LinkedList
 from node import Node
 
+print "\nCreating LinkedList from python list"
 my_list = LinkedList([Node(2), Node(0), Node(0),Node(4)])
-print "\nNew list created"
 my_list.to_string()
 
-print "\nAdding new nodes"
-my_list.add_nodes([Node(5), None, Node(21), Node(0)])
+print "\nAdding single node"
+my_list.add_nodes(Node(5))
 my_list.to_string()
 
-print "\nAdding new nodes"
+print "\nAdding nodes from python tuple"
 my_list.add_nodes((Node(0), Node(20), Node(-1)))
 my_list.to_string()
