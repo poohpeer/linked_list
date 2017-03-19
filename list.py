@@ -1,7 +1,10 @@
 class LinkedList(object):
 
-    def __init__(self, root=None):
-        self._root = root
+    def __init__(self, nodes=None):
+        self._root = None
+        # If nodes passed, add them while constructing
+        if nodes:
+            self.add_nodes(nodes)
 
     @property
     def root(self):
@@ -18,10 +21,10 @@ class LinkedList(object):
     def add_node(self, new_node):
         if new_node is None:
             print("Error: Node is None. Skipped.")
-            return True
+            return False
 
         print "Adding node '{}'".format(new_node.data)
-        if self.root is None:
+        if not self.root:
             self.root = new_node
             return True
 
@@ -30,7 +33,7 @@ class LinkedList(object):
         while cur_node:
             if new_node.data >= cur_node.data:
                 if cur_node.has_next() and new_node.data <= cur_node.next_node.data:
-                    # If new node gt current node, replace it
+                    # If new node lower than current node, replace it
                     old_next = cur_node.next_node
                     cur_node.next_node = new_node
                     new_node.next_node = old_next
@@ -50,7 +53,8 @@ class LinkedList(object):
         return True
 
     def add_nodes(self, new_nodes):
-        if not isinstance(new_nodes, list):
+        # New nodes may be list or tuple
+        if not isinstance(new_nodes, list) and not isinstance(new_nodes, tuple):
             raise ValueError("New nodes must be of type list, but it's {}".format(type(new_nodes)))
         for node in new_nodes:
             self.add_node(node)
