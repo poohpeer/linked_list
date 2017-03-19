@@ -17,8 +17,10 @@ class LinkedList(object):
 
     def add_node(self, new_node):
         if new_node is None:
-            raise ValueError("Node is None")
+            print("Error: Node is None. Skipped.")
+            return True
 
+        print "Adding node '{}'".format(new_node.data)
         if self.root is None:
             self.root = new_node
             return True
@@ -26,11 +28,16 @@ class LinkedList(object):
         cur_node = self.root
 
         while cur_node:
-            if new_node.data <= cur_node.data:
-                # If new node gt current node, replace it
-                new_node.next_node = cur_node
+            if new_node.data >= cur_node.data:
+                if cur_node.has_next() and new_node.data <= cur_node.next_node.data:
+                    # If new node gt current node, replace it
+                    old_next = cur_node.next_node
+                    cur_node.next_node = new_node
+                    new_node.next_node = old_next
+            else:
                 if cur_node == self.root:
                     # If current was root, set new to be root
+                    new_node.next_node = self.root
                     self.root = new_node
                     return True
                 else:
@@ -50,6 +57,7 @@ class LinkedList(object):
 
     def to_string(self):
         cur_node = self.root
+        print "\nList Content:"
         while cur_node:
             print cur_node.data
             cur_node = cur_node.next_node
