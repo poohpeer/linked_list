@@ -1,4 +1,5 @@
 class Node(object):
+    """List node implementation"""
 
     def __init__(self, data, next_node=None):
         self._data = data

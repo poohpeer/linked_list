@@ -2,6 +2,7 @@ from my_exceptions import EmptyNodeException
 
 
 class LinkedList(object):
+    """Linked list implementation"""
 
     def __init__(self, nodes=None):
         self._root = None
@@ -10,10 +11,6 @@ class LinkedList(object):
             self.add_nodes(nodes)
 
     @property
-    def root(self):
-        return self._root
-
-    @root.getter
     def root(self):
         return self._root
 
